@@ -51,7 +51,6 @@ Linkando.dev é um projeto desenvolvido pela Squad 2 do Juniando, com o objetivo
 ### Frontend
 - Next.js / React
 - TailwindCSS
-- React Hook Form + Zod
 - Axios
 
 ### Backend
