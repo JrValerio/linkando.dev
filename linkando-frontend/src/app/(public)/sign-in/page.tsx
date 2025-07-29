@@ -1,10 +1,34 @@
+"use client";
+
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa6";
+import { useState } from "react";
 import logo from "../../../assets/logo.png";
 import background from "../../../assets/background.png";
 
-const page = () => {
+const Page = () => {
+  const [isLoading, setIsLoading] = useState<null | "google" | "github">(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const fakeLogin = async (provider: "google" | "github") => {
+    setIsLoading(provider);
+    setError(null);
+
+    try {
+      // Simula tempo de carregamento
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      // Simula erro
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Ocorreu um erro desconhecido.");
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
@@ -27,16 +51,46 @@ const page = () => {
               Use sua conta Google ou GitHub para entrar com segurança
             </p>
 
+            {error && (
+              <div className="text-red-600 text-sm bg-red-100 px-4 py-2 rounded-md border border-red-300 w-full max-w-sm">
+                {error}
+              </div>
+            )}
+
             <div className="flex flex-row gap-3 w-full max-w-sm">
-              <button className="flex items-center justify-center gap-2 border border-gray-300 rounded-md px-5 py-2 bg-white hover:bg-gray-100 transition w-1/2">
-                <FaGithub className="w-4 h-4 text-gray-600" />
+              <button
+                onClick={() => fakeLogin("github")}
+                disabled={isLoading !== null}
+                className={`flex items-center justify-center gap-2 border border-gray-300 rounded-md px-5 py-2 w-1/2 transition ${
+                  isLoading === "github"
+                    ? "bg-gray-100 text-gray-400"
+                    : "bg-white hover:bg-gray-100"
+                }`}
+              >
+                {isLoading === "github" ? (
+                  <span className="animate-spin h-4 w-4 border-2 border-gray-400 border-t-transparent rounded-full" />
+                ) : (
+                  <FaGithub className="w-4 h-4 text-gray-800" />
+                )}
                 <span className="text-sm font-medium text-gray-700">
                   Github
                 </span>
               </button>
 
-              <button className="flex items-center justify-center gap-2 bg-violet-500 hover:bg-violet-600 transition text-white rounded-md px-5 py-2 w-1/2">
-                <FaGoogle className="w-4 h-4 rounded-full" />
+              <button
+                onClick={() => fakeLogin("google")}
+                disabled={isLoading !== null}
+                className={`flex items-center justify-center gap-2 text-white rounded-md px-5 py-2 w-1/2 transition ${
+                  isLoading === "google"
+                    ? "bg-violet-400"
+                    : "bg-violet-500 hover:bg-violet-600"
+                }`}
+              >
+                {isLoading === "google" ? (
+                  <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+                ) : (
+                  <FaGoogle className="w-4 h-4" />
+                )}
                 <span className="text-sm font-medium">Google</span>
               </button>
             </div>
@@ -75,4 +129,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
