@@ -2,6 +2,7 @@
 
 import { signIn } from 'next-auth/react';
 import { useEffect } from 'react';
+import SocialButton from "../components/SocialButton";
 
 export default function Home() {
   useEffect(() => {
@@ -15,19 +16,8 @@ export default function Home() {
         <p className="text-sm text-gray-400">Encurte e gerencie seus links com segurança.</p>
 
         <div className="space-y-4">
-          <button
-            className="w-full py-2 px-4 bg-white text-black rounded hover:bg-gray-200 transition"
-            onClick={() => signIn('google')}
-          >
-            Entrar com Google
-          </button>
-
-          <button
-            className="w-full py-2 px-4 bg-black border border-white text-white rounded hover:bg-white hover:text-black transition"
-            onClick={() => signIn('github')}
-          >
-            Entrar com GitHub
-          </button>
+          <SocialButton provider="google" onClick={() => signIn('google')} />
+<SocialButton provider="github" onClick={() => signIn('github')} />
         </div>
       </div>
     </main>
