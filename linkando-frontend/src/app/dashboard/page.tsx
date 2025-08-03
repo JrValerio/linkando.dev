@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getDashboardData } from '@/services/api';
-import type { ShortLink } from '@/types';
+import { getDashboardData } from '../../services/api';
+import type { ShortLink } from '../../types';
 
 export default function DashboardPage() {
   const [links, setLinks] = useState<ShortLink[]>([]);
