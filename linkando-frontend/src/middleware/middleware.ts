@@ -1,37 +1,28 @@
-import { withAuth } from 'next-auth/middleware';
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-export default withAuth(
-  function middleware(req) {
-    const url = req.nextUrl.pathname;
-    console.log(`[ACESSO] ${url} - ${new Date().toISOString()}`);
+export async function middleware(req: NextRequest) {
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-    return NextResponse.next();
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => {
-        if (!token) return false;
+  const url = req.nextUrl.pathname;
+  console.log(`[ACESSO] ${url} - ${new Date().toISOString()}`);
 
-        // Se for rota de admin, exige role 'admin'
-        if (typeof token === 'object' && token.role && token.role === 'admin') {
-          return true;
-        }
-
-        if (token && token.email) {
-          return true;
-        }
-
-        return false;
-      },
-    },
+  if (!token) {
+    return NextResponse.redirect(new URL("/", req.url));
   }
-);
+
+  if (url.startsWith("/admin") && token?.role !== "admin") {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: [
-    '/dashboard/:path*',
-    '/admin/:path*',
-    '/encurtar/:path*',
+    "/dashboard/:path*",
+    "/admin/:path*",
+    "/encurtar/:path*",
   ],
 };
