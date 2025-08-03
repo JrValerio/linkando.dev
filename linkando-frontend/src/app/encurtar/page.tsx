@@ -1,35 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import axios from 'axios';
+import { useShortenLink } from '../../hooks/useShortenLink';
 
 export default function EncurtarPage() {
   const [originalUrl, setOriginalUrl] = useState('');
   const [customSlug, setCustomSlug] = useState('');
   const [password, setPassword] = useState('');
-  const [shortUrl, setShortUrl] = useState('');
-  const [error, setError] = useState('');
+  const { shorten, shortUrl, error, loading } = useShortenLink();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setShortUrl('');
-
-    try {
-      const response = await axios.post('/api/shorten', {
-        originalUrl,
-        slug: customSlug || undefined,
-        password: password || undefined,
-      });
-
-      setShortUrl(response.data.shortUrl);
-    } catch (err: any) {
-      if (err.response?.status === 409) {
-        setError('Slug personalizado já está em uso.');
-      } else {
-        setError('Erro ao encurtar o link.');
-      }
-    }
+    await shorten(originalUrl, customSlug || undefined, password || undefined);
   };
 
   return (
@@ -76,9 +58,10 @@ export default function EncurtarPage() {
 
         <button
           type="submit"
+          disabled={loading}
           className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 transition rounded text-white"
         >
-          Encurtar
+          {loading ? 'Encurtando...' : 'Encurtar'}
         </button>
 
         {shortUrl && (
