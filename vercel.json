@@ -1,3 +1,5 @@
 {
-  "rootDirectory": "linkando-frontend"
+  "buildCommand": "npm run build",
+  "outputDirectory": "out",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./linkando-frontend/"
 }
