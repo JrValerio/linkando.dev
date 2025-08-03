@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  reactStrictMode: true,
   experimental: {
-    serverActions: {}, 
+    serverActions: true, 
   },
   images: {
     remotePatterns: [
