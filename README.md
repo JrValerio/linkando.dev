@@ -1,147 +1,146 @@
-# 📎 Linkando.dev – Encurtador de URLs
+# 🌐 Linkando.dev
 
-Linkando.dev é um projeto desenvolvido pela Squad 2 do Juniando, com o objetivo de simular um ambiente real de desenvolvimento colaborativo. Trata-se de uma aplicação web para encurtar URLs, com opção de links privados com senha, autenticação via Google/GitHub e dashboard com métricas.
-
----
-
-## 🚀 Funcionalidades
-
-### Para usuários autenticados:
-- [x] Login via Google ou GitHub
-- [x] Encurtar links com slug personalizado ou automático
-- [x] Definir se o link é público ou privado (com senha)
-- [x] Visualizar histórico de links encurtados
-- [x] Acompanhar métricas de acessos (número de cliques, data de criação)
-
-### Para visitantes:
-- [x] Acessar links públicos diretamente
-- [x] Acessar links privados mediante senha
-
-### Para administradores:
-- [ ] Visualizar todos os links e usuários
-- [ ] Painel com gráficos de uso geral da plataforma
+> Projeto Fullstack de encurtamento de URLs com autenticação OAuth, dashboard personalizada, proteção de links por senha e métricas de acesso. Desenvolvido com foco em escalabilidade, segurança e UX moderna.
 
 ---
 
-## 🧑‍💻 Squad 2
-
-**Analistas:**
-- Amaro Valério da Silva Junior
-- Adryann Geovanny Araújo de Brito Costa
-
-**Frontend:**
-- Gabriel Moreira Lemes
-- Rafaela Aparecida Góes da Silva
-- Pablo Rossoni
-- Alexsandro Cristiano Gonçalves da Silva
-- Victor Alves de Andrade Oliveira
-- Luís Otávio Pessôa da Silva
-- Natanael Melo
-- Luiz Davi Duarte Serafim
-
-**Backend:**
-- Andrius Anselmi
-- Heloise Vitória Nunes
-- Lucas Ximenes dos Santos
-
----
-
-## 🧰 Tecnologias Utilizadas
+## 🚀 Tecnologias Utilizadas
 
 ### Frontend
-- Next.js / React
-- TailwindCSS
-- Axios
+- [Next.js 15 (App Router)](https://nextjs.org/)
+- TypeScript + TailwindCSS
+- NextAuth.js (Google e GitHub OAuth)
+- Axios + Hooks personalizados
+- Controllers e Views separadas
 
 ### Backend
 - Node.js + Express
 - MongoDB + Mongoose
-- JWT + OAuth (Google/GitHub)
+- JWT + Refresh Token
+- Middleware de proteção de rotas
+- Modularização completa (routes, services, controllers)
 
 ---
 
-## 📁 Estrutura do Projeto
+## 📁 Estrutura de Pastas
 
-**/frontend** → Aplicação Next.js com rotas de login, dashboard e encurtamento
+### 📦 linkando-frontend/
+```
+linkando-frontend/
+├── .env.example
+├── README.md
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── page.tsx
+│   │   ├── dashboard/page.tsx
+│   │   ├── verify-password/page.tsx
+│   │   ├── [slug]/page.tsx
+│   │   ├── admin/page.tsx
+│   │   └── encurtar/page.tsx
+│   ├── controllers/
+│   │   └── DashboardController.ts
+│   ├── views/
+│   │   └── DashboardView.tsx
+│   ├── services/
+│   │   └── api.ts
+│   ├── types/
+│   │   └── index.ts
+│   ├── styles/
+│   │   └── globals.css
+├── tsconfig.json
+├── next.config.ts
+├── postcss.config.mjs
+├── eslint.config.mjs
+```
 
-**/backend** → API REST com rotas para CRUD de links, autenticação e métricas
+### 🛠️ linkando-backend/
+```
+linkando-backend/
+├── .env.example
+├── README.md
+├── src/
+│   ├── index.ts
+│   ├── routes/
+│   ├── controllers/
+│   ├── models/
+│   ├── services/
+│   └── middlewares/
+├── tsconfig.json
+├── package.json
+├── .gitignore
+├── setup-oauth.js
+```
 
 ---
 
-## 📦 Como rodar localmente
+## 🔐 Funcionalidades
+
+| Funcionalidade                  | Status     |
+|--------------------------------|------------|
+| Login com Google/GitHub        | ✅ Implementado
+| Refresh Token                  | ✅ Com cookies seguros
+| Encurtar links                 | ✅ Pronto para uso
+| Personalização de slug         | ✅ Slug manual ou automático
+| Proteção por senha             | ✅ Link acessado só após senha
+| Dashboard com links criados    | ✅ Visual e funcional
+| Expiração de links             | ✅ Por data definida
+| Métricas de acesso             | ✅ IP, navegador e tempo
+| Painel admin                   | ✅ Listagem de usuários
+
+---
+
+## ⚙️ Instalação
 
 ```bash
-# Clone o repositório
-git clone https://github.com/JrValerio/linkando.dev.git
+# Clonar o projeto
+$ git clone https://github.com/JrValerio/linkando.dev
 
-# Acesse as pastas e instale dependências
-cd frontend
-npm install
+# FRONTEND
+$ cd linkando-frontend
+$ npm install
+$ npm run dev
 
-cd ../backend
-npm install
-```
-
-Configure as variáveis de ambiente com `.env.example` e rode:
-```bash
-npm run dev
+# BACKEND
+$ cd ../linkando-backend
+$ npm install
+$ npm run dev
 ```
 
 ---
 
-## 🧪 Testes
-Ainda não implementado.
+## 📄 Variáveis de Ambiente (`.env`)
+
+```env
+# MongoDB
+MONGO_URI=mongodb://localhost:27017/linkando
+JWT_SECRET=suasecretachave
+
+# OAuth
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+NEXTAUTH_SECRET=qualquercofasegura
+```
 
 ---
 
-## 🧠 Como colaborar de forma organizada
+## 📸 Screenshots
 
-### 🔀 Branches e Pull Requests
-- Sempre crie uma nova branch para sua tarefa:
-```bash
-git checkout -b feat/nome-da-funcionalidade
-```
-- Após terminar, dê push e abra um Pull Request com o título claro e objetivo:
-```bash
-git push origin feat/nome-da-funcionalidade
-```
-- No PR, descreva o que foi feito, o que testou e se há algo pendente
-- Nunca suba direto na `main` ou `develop`, sempre via PR
-
-### ✅ Commits semânticos
-Use esse padrão para facilitar leitura e rastreabilidade:
-```
-feat: adiciona nova funcionalidade
-fix: corrige erro específico
-refactor: melhora o código sem alterar funcionalidade
-style: muda estilo (CSS, indentação...)
-docs: alteração em documentação
-```
-Exemplo:
-```bash
-git commit -m "feat: cria formulário de encurtamento de link"
-```
-
-### 🚨 Merges
-- Antes de dar merge, revise o PR (pode pedir ajuda a outros devs)
-- Dê merge apenas se tudo estiver testado/localmente funcional
-- Use **Squash & Merge** para manter histórico limpo
+> (inserir imagens da Dashboard, página de encurtamento e login com dark mode)
 
 ---
 
-## 📚 Documentação
-> Em breve um link para a documentação completa da API com Swagger ou Postman.
+## 🙋‍♂️ Contribuindo
+
+- Leia o arquivo [CONTRIBUTING.md](./CONTRIBUTING.md)
+- Código de conduta disponível em [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
 
 ---
 
-## 📬 Contribuições
-1. Fork este repositório
-2. Crie uma branch: `git checkout -b minha-feature`
-3. Commit suas mudanças: `git commit -m 'feat: minha funcionalidade'`
-4. Push: `git push origin minha-feature`
-5. Abra um Pull Request
+## 👨‍💻 Autor
 
----
+Projeto desenvolvido por **Amaro Júnior** ([@JrValerio](https://github.com/JrValerio)) e colaboradores.
 
-## 📃 Licença
-MIT — à vontade para usar, contribuir e compartilhar!
+> Encurte links. Expanda possibilidades. 🚀
