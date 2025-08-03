@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { redirect } from 'next/navigation';
 
-interface Props {
-  params: { slug: string };
+interface PageProps {
+  params: { slug: string }
 }
 
-export default async function SlugRedirectPage({ params }: Props) {
+export default async function SlugRedirectPage({ params }: PageProps) {
   const { slug } = params;
 
   try {
