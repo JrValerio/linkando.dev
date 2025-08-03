@@ -3,7 +3,6 @@
 import { signIn } from "next-auth/react";
 import { useEffect } from "react";
 import SocialButton from "../components/SocialButton";
-import LogoutButton from '../components/LogoutButton';
 
 
 export default function Home() {
