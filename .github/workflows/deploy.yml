@@ -15,9 +15,11 @@ jobs:
 
       - name: Instalar dependências
         run: npm install
+        working-directory: linkando-frontend
 
       - name: Build do projeto
         run: npm run build
+        working-directory: linkando-frontend
 
       - name: Deploy na Vercel
         uses: amondnet/vercel-action@v25
@@ -26,3 +28,4 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
+          working-directory: ./linkando-frontend
