@@ -1,36 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import axios from 'axios';
+import { Suspense } from 'react';
+import { useVerifyPasswordPage } from '../../hooks/useVerifyPasswordPage';
 
-export default function VerifyPasswordPage() {
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const searchParams = useSearchParams();
-  const router = useRouter();
+export default function PageWrapper() {
+  return (
+    <Suspense fallback={<p className="text-white">Carregando...</p>}>
+      <VerifyPasswordPage />
+    </Suspense>
+  );
+}
 
-  const slug = searchParams.get('slug');
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-
-    try {
-      const res = await axios.post(`/api/verify-password/${slug}`, { password });
-
-      if (res.status === 200) {
-        const { destination } = res.data;
-        router.push(destination);
-      }
-    } catch (err: any) {
-      if (err.response?.status === 401) {
-        setError('Senha incorreta');
-      } else {
-        setError('Erro ao verificar a senha');
-      }
-    }
-  };
+function VerifyPasswordPage() {
+  const { password, error, setPassword, handleSubmit } = useVerifyPasswordPage();
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-950 text-white px-4">
