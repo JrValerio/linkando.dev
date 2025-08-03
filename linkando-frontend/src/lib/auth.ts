@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
+import type { NextAuthOptions } from "next-auth";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -14,10 +14,15 @@ export const authOptions = {
     }),
   ],
   pages: {
-    signIn: '/',
+    signIn: "/",              // Tela de login
+    signOut: "/",             // Após logout
+    error: "/?error=true",    // Caso ocorra erro
+    newUser: "/dashboard",    // Primeira vez logado
+  },
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      return `${baseUrl}/dashboard`;  // Sempre vai pra dashboard após login
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
-
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
