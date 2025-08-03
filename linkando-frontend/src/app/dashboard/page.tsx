@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getDashboardData } from '../../services/api';
-import type { ShortLink } from '../../types';
+import { getDashboardData } from '../services/api';
+import type { ShortLink } from '../types';
+import LogoutButton from '../components/LogoutButton';
 
 export default function DashboardPage() {
   const [links, setLinks] = useState<ShortLink[]>([]);
@@ -25,7 +26,10 @@ export default function DashboardPage() {
 
   return (
     <main className="min-h-screen bg-gray-950 text-white p-6">
-      <h1 className="text-2xl font-semibold mb-6">Meus Links</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-semibold">Meus Links</h1>
+        <LogoutButton />
+      </div>
 
       {loading ? (
         <p className="text-gray-400">Carregando...</p>
