@@ -14,14 +14,14 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/",              // Tela de login
-    signOut: "/",             // Após logout
-    error: "/?error=true",    // Caso ocorra erro
-    newUser: "/dashboard",    // Primeira vez logado
+    signIn: "/",
+    signOut: "/",
+    error: "/?error=true",
+    newUser: "/dashboard",
   },
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      return `${baseUrl}/dashboard`;  // Sempre vai pra dashboard após login
+    async redirect({ baseUrl }) {
+      return `${baseUrl}/dashboard`;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
